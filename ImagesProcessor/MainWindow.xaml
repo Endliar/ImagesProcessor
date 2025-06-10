@@ -1,0 +1,52 @@
+﻿<Window x:Class="ImagesProcessor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImagesProcessor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Загрузка изображения -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
+            <Button Content="Load Image" Click="LoadImage_Click" Width="100" Height="30"/>
+            <ComboBox x:Name="channelSelector" Margin="10,0" Width="100" Height="30" SelectionChanged="channelSelector_SelectionChanged">
+                <ComboBoxItem>Red</ComboBoxItem>
+                <ComboBoxItem>Green</ComboBoxItem>
+                <ComboBoxItem>Blue</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Оригинальное изображение -->
+        <Image x:Name="originalImage" Grid.Row="1" Grid.Column="0" Stretch="UniformToFill"/>
+
+        <!-- Обработанное изображение -->
+        <Image x:Name="processedImage" Grid.Row="1" Grid.Column="1" Stretch="UniformToFill"/>
+
+        <!-- Панель управления -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="10">
+            <Button Content="Show Channel" Click="ShowChannel_Click"/>
+            <Button Content="Grayscale" Click="Grayscale_Click"/>
+            <Button Content="Sepia" Click="Sepia_Click"/>
+
+            <GroupBox Header="Brightness/Contrast">
+                <StackPanel Orientation="Horizontal">
+                    <Slider x:Name="brightnessSlider" Minimum="-100" Maximum="100" Value="0" Width="200" Margin="5"/>
+                    <TextBlock Text="{Binding ElementName=brightnessSlider, Path=Value}"/>
+
+                    <Slider x:Name="contrastSlider" Minimum="-100" Maximum="100" Value="0" Width="200" Margin="5"/>
+                    <TextBlock Text="{Binding ElementName=contrastSlider, Path=Value}"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
