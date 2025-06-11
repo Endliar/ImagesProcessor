@@ -51,7 +51,10 @@ namespace ImagesProcessor
         {
             if (originalBitmap == null) return;
 
-            var channel = channelSelector.SelectedItem?.ToString();
+            var selectedItem = channelSelector.SelectedItem as ComboBoxItem;
+            var channel = selectedItem?.Content.ToString();
+            if (string.IsNullOrEmpty(channel)) return;
+
             processedBitmap = imageProcessor.ApplyChannelFilter(originalBitmap, channel);
             processedImage.Source = processedBitmap;
         }
@@ -67,6 +70,27 @@ namespace ImagesProcessor
         {
             if (originalBitmap == null) return;
             processedBitmap = imageProcessor.Sepia(originalBitmap);
+            processedImage.Source = processedBitmap;
+        }
+
+        private void brightnessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateBrightnessContrast();
+        }
+
+        private void contrastSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateBrightnessContrast();
+        }
+
+        private void UpdateBrightnessContrast()
+        {
+            if (originalBitmap == null) return;
+
+            double brightness = brightnessSlider.Value;
+            double contrast = contrastSlider.Value;
+
+            processedBitmap = imageProcessor.AdjustBrightnessContrast(originalBitmap, brightness, contrast);
             processedImage.Source = processedBitmap;
         }
     }
@@ -86,16 +110,16 @@ namespace ImagesProcessor
                 switch (channel?.ToLower())
                 {
                     case "red":
-                        pixels[i + 1] = 0;
-                        pixels[i + 2] = 0;
+                        pixels[i] = 0;     // Blue (i+0)
+                        pixels[i + 1] = 0; // Green (i+1)
                         break;
                     case "green":
-                        pixels[i] = 0;
-                        pixels[i + 2] = 0;
+                        pixels[i] = 0;     // Blue (i+0)
+                        pixels[i + 2] = 0; // Red (i+2)
                         break;
                     case "blue":
-                        pixels[i] = 0;
-                        pixels[i + 1] = 0;
+                        pixels[i + 1] = 0; // Green (i+1)
+                        pixels[i + 2] = 0; // Red (i+2)
                         break;
                 }
             }

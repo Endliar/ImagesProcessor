@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImagesProcessor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -27,10 +27,10 @@
         </StackPanel>
 
         <!-- Оригинальное изображение -->
-        <Image x:Name="originalImage" Grid.Row="1" Grid.Column="0" Stretch="UniformToFill"/>
+        <Image x:Name="originalImage" Grid.Row="1" Grid.Column="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Обработанное изображение -->
-        <Image x:Name="processedImage" Grid.Row="1" Grid.Column="1" Stretch="UniformToFill"/>
+        <Image x:Name="processedImage" Grid.Row="1" Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Панель управления -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="10">
@@ -40,11 +40,9 @@
 
             <GroupBox Header="Brightness/Contrast">
                 <StackPanel Orientation="Horizontal">
-                    <Slider x:Name="brightnessSlider" Minimum="-100" Maximum="100" Value="0" Width="200" Margin="5"/>
-                    <TextBlock Text="{Binding ElementName=brightnessSlider, Path=Value}"/>
+                    <Slider x:Name="brightnessSlider" Minimum="-100" Maximum="100" Value="0" Width="200" Margin="5" ValueChanged="brightnessSlider_ValueChanged"/>
 
-                    <Slider x:Name="contrastSlider" Minimum="-100" Maximum="100" Value="0" Width="200" Margin="5"/>
-                    <TextBlock Text="{Binding ElementName=contrastSlider, Path=Value}"/>
+                    <Slider x:Name="contrastSlider" Minimum="-100" Maximum="100" Value="0" Width="200" Margin="5" ValueChanged="contrastSlider_ValueChanged"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
